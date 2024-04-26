@@ -1,6 +1,18 @@
 Rails.application.routes.draw do
-  
+  get 'users/profile'
+  devise_for :users, controllers: {
+    sessions: 'users/sessions',
+    registrations: 'users/registrations'
+  }
+  get '/u/:id', to: 'users#profile', as: 'user'
+
+  #posts/1/comments/4
+  resources :posts do
+    resources :comments
+  end
+
   get 'about', to: 'pages#about'
+  # get 'post', to: 'pages#posts'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
